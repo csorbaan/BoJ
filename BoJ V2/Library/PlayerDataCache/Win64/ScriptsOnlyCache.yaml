@@ -2,19 +2,80 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - Enemy
+    - "InGameMen\xFC"
+    - "Men\xFC"
     - Movement
     - Player
     - PlayerFollow
     - PlayerManager
     - Spawn
+    UnityEditor.TestRunner.dll:
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.RawImage
     - UnityEngine.UI.Text
   sceneClasses:
+    "Assets/Scenes/Men\xFC.unity":
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9496}
+    - Class: 114
+      Script: {instanceID: 9498}
+    - Class: 114
+      Script: {instanceID: 9504}
+    - Class: 114
+      Script: {instanceID: 9510}
+    - Class: 114
+      Script: {instanceID: 9518}
+    - Class: 114
+      Script: {instanceID: 9540}
+    - Class: 114
+      Script: {instanceID: 9554}
+    - Class: 114
+      Script: {instanceID: 9556}
+    - Class: 114
+      Script: {instanceID: 15626}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/Teszt.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -40,6 +101,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
@@ -51,6 +116,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9478}
     - Class: 114
+      Script: {instanceID: 9496}
+    - Class: 114
       Script: {instanceID: 9498}
     - Class: 114
       Script: {instanceID: 9504}
@@ -58,6 +125,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 9510}
     - Class: 114
       Script: {instanceID: 9518}
+    - Class: 114
+      Script: {instanceID: 9540}
     - Class: 114
       Script: {instanceID: 9554}
     - Class: 114
@@ -68,6 +137,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10088}
     - Class: 114
       Script: {instanceID: 10264}
+    - Class: 114
+      Script: {instanceID: 18962}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -85,6 +156,8 @@ ScriptsOnlyBuild:
     - Class: 195
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 218
       Script: {instanceID: 0}
@@ -393,18 +466,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_InputField
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: UnityEngine.Advertisements.dll
-    namespaceName: UnityEngine.Advertisements
-    className: CallbackExecutor
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: UnityEngine.Advertisements.dll
-    namespaceName: UnityEngine.Advertisements.Editor
-    className: Placeholder
   - hash:
       serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
@@ -993,7 +1054,26 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: "Men\xFC"
+  - hash:
+      serializedVersion: 2
+      Hash: 4b4ca171d967dd46c9d32440503221c3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: "InGameMen\xFC"
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: "GameMen\xFC"
   platform: 19
   scenePathNames:
+  - "Assets/Scenes/Men\xFC.unity"
   - Assets/Scenes/Teszt.unity
-  playerPath: C:/Users/Csorbaan/Documents/GitHub/BoJ/Build/BoJ V2.exe
+  playerPath: D:/Github/Szakdoga/BoJ/Build/BoJ V2.exe
