@@ -1,0 +1,69 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+
+public class Enemy : MonoBehaviour
+{
+    [Header("Stats")]
+    public float health;
+    public float dmg;
+
+    NavMeshAgent navMeshAgent;
+    Animator anim;
+
+    public float lookRadius;
+    public float attackRadius;
+
+    float nextAttack;
+    float attackRate = 1f;
+
+    Transform targetPlayer;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        health = 100;
+        targetPlayer = PlayerManager.instance.ourPlayer.transform;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float distance = Vector3.Distance(transform.position, targetPlayer.position);
+        if (distance <= lookRadius)
+        {
+            MoveAndAttack();
+        }
+    }
+
+    public void Hit(float dmg)
+    {
+        health -= dmg;
+        if (health <= 0) Destroy(gameObject);
+    }
+
+    void MoveAndAttack()
+    {
+        navMeshAgent.destination = targetPlayer.position;
+
+        if(!navMeshAgent.pathPending && navMeshAgent.remainingDistance > attackRadius)
+        {
+            navMeshAgent.isStopped = false;
+        }
+        else if(!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= attackRadius)
+        {
+            transform.LookAt(targetPlayer);
+
+            if(Time.time > nextAttack)
+            {
+                PlayerManager.instance.ourPlayer.GetComponent<Player>().Hit(dmg);
+                nextAttack = Time.time + attackRate;
+            }
+
+            navMeshAgent.isStopped = true;
+        }
+    }
+}
