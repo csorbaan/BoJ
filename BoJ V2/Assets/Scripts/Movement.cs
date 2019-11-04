@@ -23,7 +23,6 @@ public class Movement : MonoBehaviour
     bool enemyClicked;
     bool walking;
 
-    // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -32,7 +31,6 @@ public class Movement : MonoBehaviour
         e_HP.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

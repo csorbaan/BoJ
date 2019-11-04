@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 
-public class InGameMenü : MonoBehaviour
+public class InGameMenu : MonoBehaviour
 {
     public GameObject inGameMenu;
    
@@ -23,6 +23,6 @@ public class InGameMenü : MonoBehaviour
 
     public void Exit()
     {
-        SceneManager.LoadScene("Menü");
+        SceneManager.LoadScene("Menu");
     }
 }

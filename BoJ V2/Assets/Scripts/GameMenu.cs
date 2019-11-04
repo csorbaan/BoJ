@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMenü : MonoBehaviour
+public class GameMenu : MonoBehaviour
 {
     public 
 
