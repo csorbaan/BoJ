@@ -4,17 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class Movement : MonoBehaviour
+public class Action : MonoBehaviour
 {
     public GameObject e_HP;
     Text e_HP_text;
+    public float CHD;
+    public float CHC;
 
     [Header("Stats")]
     public float attackDistance;
     public float attackRate;
     float nextAttack;
     public float dmg;
-    
+
     NavMeshAgent navMeshAgent;
     Animator anim;
     Enemy enemy;
@@ -33,9 +35,14 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        dmg = PlayerManager.instance.ourPlayer.GetComponent<Player>().dmg;
+        CHC = PlayerManager.instance.ourPlayer.GetComponent<Player>().CHC;
+        CHD = PlayerManager.instance.ourPlayer.GetComponent<Player>().CHD;
+        attackRate = PlayerManager.instance.ourPlayer.GetComponent<Player>().AS;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        
+
         if (Input.GetMouseButton(0))
         {
             if (Physics.Raycast(ray, out hit, 1000))
@@ -49,7 +56,7 @@ public class Movement : MonoBehaviour
                     targetedEnemy = hit.transform;
                     enemyClicked = true;
                     e_HP.SetActive(true);
-                    e_HP_text.text = enemy.health.ToString();
+                    e_HP_text.text = enemy.health.ToString("0");
                 }
                 else
                 {
@@ -98,8 +105,12 @@ public class Movement : MonoBehaviour
 
             if (Time.time > nextAttack)
             {
+                if (Random.Range(0, 100) <= CHC)
+                {
+                    dmg = dmg * (1 + CHD / 100);
+                }
                 enemy.Hit(dmg);
-                if (!enemy) e_HP.SetActive(false);
+                if (!enemy || enemy.health <= 0) e_HP.SetActive(false);
                 else e_HP_text.text = enemy.health.ToString();
                 nextAttack = Time.time + attackRate;
             }

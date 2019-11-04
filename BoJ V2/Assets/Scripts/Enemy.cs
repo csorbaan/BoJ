@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [Header("Stats")]
     public float health;
     public float dmg;
+    public float xp;
 
     NavMeshAgent navMeshAgent;
     Animator anim;
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        xp = 250;
+        dmg = 2;
         navMeshAgent = GetComponent<NavMeshAgent>();
         health = 100;
         targetPlayer = PlayerManager.instance.ourPlayer.transform;
@@ -37,6 +40,11 @@ public class Enemy : MonoBehaviour
         {
             MoveAndAttack();
         }
+    }
+
+    void OnDestroy()
+    {
+        PlayerManager.instance.ourPlayer.GetComponent<Player>().GetXP(xp);
     }
 
     public void Hit(float dmg)
