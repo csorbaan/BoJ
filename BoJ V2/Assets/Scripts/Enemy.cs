@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
 
     float nextAttack;
     float attackRate = 1f;
+    bool agro;
+    Vector3 spawnLoc;
 
     Transform targetPlayer;
 
@@ -30,15 +32,20 @@ public class Enemy : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         health = 100;
         targetPlayer = PlayerManager.instance.ourPlayer.transform;
+        spawnLoc = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         float distance = Vector3.Distance(transform.position, targetPlayer.position);
-        if (distance <= lookRadius)
+        if (distance <= lookRadius || agro)
         {
             MoveAndAttack();
+        }
+        if (Vector3.Distance(spawnLoc,transform.position)>=10)
+        {
+            MoveBack();
         }
     }
 
@@ -73,5 +80,16 @@ public class Enemy : MonoBehaviour
 
             navMeshAgent.isStopped = true;
         }
+    }
+
+    void MoveBack()
+    {
+        agro = false;
+        navMeshAgent.destination = spawnLoc;
+    }
+
+    public void Agro()
+    {
+        agro = true;
     }
 }
