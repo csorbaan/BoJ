@@ -10,9 +10,11 @@ public class Enemy : MonoBehaviour
     public float health;
     public float dmg;
     public float xp;
+    public float mHealth;
 
     NavMeshAgent navMeshAgent;
     Animator anim;
+    EnemyHPBar ehp;
 
     public float lookRadius;
     public float attackRadius;
@@ -31,6 +33,7 @@ public class Enemy : MonoBehaviour
         dmg = 2;
         navMeshAgent = GetComponent<NavMeshAgent>();
         health = 100;
+        mHealth = 100;
         targetPlayer = PlayerManager.instance.ourPlayer.transform;
         spawnLoc = transform.position;
     }
@@ -38,6 +41,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         float distance = Vector3.Distance(transform.position, targetPlayer.position);
         if (distance <= lookRadius || agro)
         {

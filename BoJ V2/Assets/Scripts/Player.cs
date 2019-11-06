@@ -12,10 +12,9 @@ public class Player : MonoBehaviour
     private float baseCHC = 5;
     private float baseCHD = 50;
     private float nextpoti;
-    private float poticdleft;
+    public float poticdleft;
     private bool potiused = false;
     private float regentick;
-    private float xpcap;
 
     public Text p_HP;
     public Text poti_CD;
@@ -36,7 +35,10 @@ public class Player : MonoBehaviour
     public float CHD;
     public float CHC;
     public float xp;
+    public float xpcap;
     public int attribute;
+
+    PotiBar potibar;
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour
         lvl = 1;
         STR = 10;
         VIT = 10;
-        DEX = 1000;
+        DEX = 10;
         xpcap = 500 + lvl * 100;
         MaxHPCalc();
         hp = maxhp;
@@ -57,10 +59,11 @@ public class Player : MonoBehaviour
     {
         Calc();
         p_HP.text = hp.ToString("0");
-        lvl_bar.text = lvl.ToString();
+        lvl_bar.text = "lvl: " + lvl.ToString();
         xp_bar.text = xp.ToString("0") + "/" + xpcap.ToString();
-        poti_CD.text = poticdleft.ToString("F");
+        poti_CD.text = poticdleft.ToString("0.0");
         Poti();
+        
         HpRegen();
         LevelUp();
     }
@@ -75,11 +78,12 @@ public class Player : MonoBehaviour
         if (poticdleft > 0.0f && potiused)
         {
             poticdleft -= Time.deltaTime;
+            potibar.barUpload(poticd, poticdleft);
         }
         else
         {
             potiused = false;
-            poticdleft = 0;
+            poti_CD.text = "Q";
         }
         if (Time.time > nextpoti && hp != maxhp)
         {

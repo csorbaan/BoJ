@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class Action : MonoBehaviour
 {
-    public GameObject e_HP;
-    Text e_HP_text;
+    public GameObject EnemyHealth;
+    Text EHText;
     public float CHD;
     public float CHC;
 
@@ -20,6 +20,7 @@ public class Action : MonoBehaviour
     NavMeshAgent navMeshAgent;
     Animator anim;
     Enemy enemy;
+    EnemyHPBar ehpb;
 
     Transform targetedEnemy;
     bool enemyClicked;
@@ -29,8 +30,9 @@ public class Action : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        e_HP_text = e_HP.GetComponentInChildren<Text>();
-        e_HP.SetActive(false);
+        EHText = EnemyHealth.GetComponentInChildren<Text>();
+        EnemyHealth.SetActive(false);
+        ehpb = EnemyHealth.GetComponent<EnemyHPBar>();
     }
 
     void Update()
@@ -39,6 +41,7 @@ public class Action : MonoBehaviour
         CHC = PlayerManager.instance.ourPlayer.GetComponent<Player>().CHC;
         CHD = PlayerManager.instance.ourPlayer.GetComponent<Player>().CHD;
         attackRate = PlayerManager.instance.ourPlayer.GetComponent<Player>().AS;
+        
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -53,10 +56,12 @@ public class Action : MonoBehaviour
                 if (hit.collider.tag == "Enemy")
                 {
                     enemy = hit.collider.gameObject.GetComponent<Enemy>();
+                    
                     targetedEnemy = hit.transform;
                     enemyClicked = true;
-                    e_HP.SetActive(true);
-                    e_HP_text.text = enemy.health.ToString("0");
+                    EnemyHealth.SetActive(true);
+                    EHText.text = enemy.health.ToString("0");
+                    
                 }
                 else
                 {
@@ -64,7 +69,7 @@ public class Action : MonoBehaviour
                     enemyClicked = false;
                     navMeshAgent.isStopped = false;
                     navMeshAgent.destination = hit.point;
-                    e_HP.SetActive(false);
+                    EnemyHealth.SetActive(false);
                 }
             }
         }
@@ -72,6 +77,7 @@ public class Action : MonoBehaviour
         if (enemyClicked)
         {
             MoveAndAttack();
+            ehpb.barUpload(enemy.mHealth, enemy.health);
         }
 
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
@@ -110,8 +116,8 @@ public class Action : MonoBehaviour
                     dmg = dmg * (1 + CHD / 100);
                 }
                 enemy.Hit(dmg);
-                if (!enemy || enemy.health <= 0) e_HP.SetActive(false);
-                else e_HP_text.text = enemy.health.ToString();
+                if (!enemy || enemy.health <= 0) EnemyHealth.SetActive(false);
+                else EHText.text = enemy.health.ToString();
                 nextAttack = Time.time + attackRate;
             }
             navMeshAgent.isStopped = true;
