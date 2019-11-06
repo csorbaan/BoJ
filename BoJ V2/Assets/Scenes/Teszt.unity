@@ -295,9 +295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c7d5708de5cad4fb71b2345fce5ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poticdleft: 0
   p_HP: {fileID: 718038337}
   poti_CD: {fileID: 1715708675}
+  potion: {fileID: 1414208628}
   xp_bar: {fileID: 1753031198}
   lvl_bar: {fileID: 1778579289}
   maxhp: 0
@@ -2118,7 +2118,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0.507
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

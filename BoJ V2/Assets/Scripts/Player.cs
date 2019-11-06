@@ -12,12 +12,14 @@ public class Player : MonoBehaviour
     private float baseCHC = 5;
     private float baseCHD = 50;
     private float nextpoti;
-    public float poticdleft;
+    private float poticdleft;
+    private float poticdlefti;
     private bool potiused = false;
     private float regentick;
 
     public Text p_HP;
     public Text poti_CD;
+    public GameObject potion;
     public Text xp_bar;
     public Text lvl_bar;
 
@@ -43,6 +45,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        poticdlefti = 0;
         lvl = 1;
         STR = 10;
         VIT = 10;
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
         hp = maxhp;
         poticdleft = poticd;
         p_HP.text = hp.ToString();
+        potibar = potion.GetComponent<PotiBar>();
     }
 
     // Update is called once per frame
@@ -78,7 +82,12 @@ public class Player : MonoBehaviour
         if (poticdleft > 0.0f && potiused)
         {
             poticdleft -= Time.deltaTime;
-            potibar.barUpload(poticd, poticdleft);
+            potibar.barUpload(poticd, poticdlefti);
+            poticdlefti += Time.deltaTime;
+            if (poticdlefti >= 10)
+            {
+                poticdlefti = 0;
+            }
         }
         else
         {
