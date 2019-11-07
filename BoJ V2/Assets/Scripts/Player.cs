@@ -141,6 +141,33 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StrInc()
+    {
+        if (attribute > 0)
+        {
+            STR += 1;
+            attribute--;
+        }
+    }
+
+    public void DexInc()
+    {
+        if (attribute > 0)
+        {
+            DEX += 1;
+            attribute--;
+        }
+    }
+
+    public void VitInc()
+    {
+        if (attribute > 0)
+        {
+            VIT += 1;
+            attribute--;
+        }
+    }
+
     #region Calculation
     public void Calc()
     {

@@ -9,11 +9,43 @@ using UnityEngine.SceneManagement;
 public class InGameMenu : MonoBehaviour
 {
     public GameObject inGameMenu;
-   
+    public GameObject charsheet;
+    public GameObject passives;
+    bool open, openp;
+
+    private void Start()
+    {
+        charsheet.SetActive(false);
+        passives.SetActive(false);
+        open = false;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             inGameMenu.SetActive(true);
+
+        if (Input.GetKeyDown(KeyCode.I) && open == false)
+        {
+            charsheet.SetActive(true);
+            open = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.I) && open == true)
+        {
+            charsheet.SetActive(false);
+            open = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.P) && openp == false)
+        {
+            passives.SetActive(true);
+            openp = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.P) && openp == true)
+        {
+            passives.SetActive(false);
+            openp = false;
+        }
     }
 
     public void BackToGame()
