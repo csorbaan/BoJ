@@ -38,7 +38,10 @@ public class SpawnPoint : MonoBehaviour
             {
                 for (int i = 0; i < spawnAmount; i++)
                 {
-                    enemies[i].GetComponent<Enemy>().Agro();
+                    if (enemies[i] != null)
+                    {
+                        enemies[i].GetComponent<Enemy>().Agro();
+                    }
                 }
             }
         }

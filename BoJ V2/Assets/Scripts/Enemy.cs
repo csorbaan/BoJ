@@ -55,7 +55,10 @@ public class Enemy : MonoBehaviour
 
     void OnDestroy()
     {
-        PlayerManager.instance.ourPlayer.GetComponent<Player>().GetXP(xp);
+        if (PlayerManager.instance.ourPlayer != null)
+        {
+            PlayerManager.instance.ourPlayer.GetComponent<Player>().GetXP(xp);
+        }
     }
 
     public void Hit(float dmg)
