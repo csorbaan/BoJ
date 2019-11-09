@@ -25,12 +25,16 @@ public class InGameMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             inGameMenu.SetActive(true);
 
-        if (Input.GetKeyDown(KeyCode.I) && open == false)
+        //if (Input.GetKeyDown(KeyCode.C)) open = !open;   
+        //if (open == true) charsheet.SetActive(true);
+        //else charsheet.SetActive(false);
+
+        if (Input.GetKeyDown(KeyCode.C) && open == false)
         {
             charsheet.SetActive(true);
             open = true;
         }
-        else if (Input.GetKeyDown(KeyCode.I) && open == true)
+        else if (Input.GetKeyDown(KeyCode.C) && open == true)
         {
             charsheet.SetActive(false);
             open = false;
