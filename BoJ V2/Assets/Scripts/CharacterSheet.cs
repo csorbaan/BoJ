@@ -7,7 +7,7 @@ public class CharacterSheet : MonoBehaviour
 {
     public float str, dex, vit;
     public float chc, chd, hpregen, attackspeed, hp, dmg, att;
-    public Text strtext, dextext, vittext, chctext, chdtext, hpregentext, attackspeedtext, hptext, dmgtext, atttext;
+    public Text strtext, dextext, vittext, chctext, chdtext, hpregentext, attackspeedtext, hptext, dmgtext, atttext, actdmgtext;
     public Button strbtn, dexbtn, vitbtn;
     public GameObject charsheet;
 
@@ -43,13 +43,14 @@ public class CharacterSheet : MonoBehaviour
         strtext.text = "Strenght: " + str;
         dextext.text = "Dexterity: " + dex;
         vittext.text = "Vitality: " + vit;
-        chctext.text = "Increase critical chanche by: " + chc;
-        chdtext.text = "Increase critical damage by: " + chd;
-        hptext.text = "Increase health by: " + hp;
-        hpregentext.text = "Increase health regenation by: " + hpregen;
-        dmgtext.text = "Increase damage by: " + dmg;
-        attackspeedtext.text = "Increase attack speed by: " + attackspeed.ToString("0.00");
+        chctext.text = "Current Critical Chance: " + chc;
+        chdtext.text = "Current Critical Damage: " + chd;
+        hptext.text = "Maximum Health: " + hp;
+        hpregentext.text = "Current health regenation: " + hpregen.ToString("0.00");
+        dmgtext.text = "Increase damage by: " + str;
+        attackspeedtext.text = "Current Attackrate: " + attackspeed.ToString("0.00");
         atttext.text = "Attributes point left: " + att;
+        actdmgtext.text = dmg.ToString("0");
     }
 
     public void StrInc()
