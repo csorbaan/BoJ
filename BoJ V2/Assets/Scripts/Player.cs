@@ -11,17 +11,34 @@ public class Player : MonoBehaviour
     private float baseAS = 1;
     private float baseCHC = 5;
     private float baseCHD = 50;
+    float rageDmg, sdDmg;
+    float addDmg;
+    float addCHC;
+    float addCHD;
+    float addAS;
+    private float addHP;
     private float nextpoti;
     private float poticdleft;
     private float poticdlefti;
     private bool potiused = false;
     private float regentick;
+    float fscd, nextfs;
+    float swcd, nextsw;
+    bool swon;
+    float swontick;
+    int swoncd;
 
+    public bool rage;
+    public bool finalstand;
+    public bool secondwind;
+    public bool formidable;
+    public bool showdown;
     public Text p_HP;
     public Text poti_CD;
     public GameObject potion;
     public Text xp_bar;
     public Text lvl_bar;
+    public int enemyCount;
 
     [Header("Stats")]
     public float maxhp;
@@ -39,6 +56,8 @@ public class Player : MonoBehaviour
     public float xp;
     public float xpcap;
     public int attribute;
+    public int passivept;
+    public float dmgreduction;
 
     PotiBar potibar;
 
@@ -46,6 +65,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         poticdlefti = 0;
+        fscd = 60;
         lvl = 1;
         STR = 10;
         VIT = 10;
@@ -67,14 +87,14 @@ public class Player : MonoBehaviour
         xp_bar.text = xp.ToString("0") + "/" + xpcap.ToString();
         poti_CD.text = poticdleft.ToString("0.0");
         Poti();
-        
+        Passives();
         HpRegen();
         LevelUp();
     }
 
     public void Hit(float dmg)
     {
-        hp -= dmg;
+        hp -= (dmg * (1 - dmgreduction / 100));
     }
 
     public void Poti()
@@ -134,10 +154,94 @@ public class Player : MonoBehaviour
     {
         if (xp >= xpcap)
         {
+            lvl += 1;
+            if (lvl % 3 == 0)
+            {
+                passivept++;
+            }
             attribute += 10;
             xp = xp - xpcap;
-            lvl += 1;
             xpcap = 500 + lvl * 100;
+        }
+    }
+
+    #region Passive/StatInc
+    void Passives()
+    {
+        Rage();
+        Final_Stand();
+        Second_Wind();
+        Formidable();
+        Showdown();
+    }
+
+    public void Rage()
+    {
+        if (rage && hp <= (maxhp * 0.4))
+        {
+            addDmg = 20;
+        }
+        else
+        {
+            addDmg = 0;
+        }
+    }
+
+    public void Final_Stand()
+    {
+        if (finalstand && hp <= 0 && Time.time > nextfs)
+        {
+
+            nextfs = Time.time + fscd;
+        }
+    }
+
+    public void Second_Wind()
+    {
+        if (secondwind && hp <= (maxhp * 0.2) && Time.time > nextsw)
+        {
+            swon = true;
+            nextsw = Time.time + swcd;
+        }
+        if (swon && Time.time > swontick)
+        {
+            hp += maxhp * 0.02f;
+            swontick = Time.time + 1;
+            swoncd++;
+            if (swoncd == 10)
+            {
+                swon = false;
+            }
+        }
+    }
+
+    public void Formidable()
+    {
+        if (formidable && enemyCount >= 3)
+        {
+            if (enemyCount < 8)
+            {
+                dmgreduction = enemyCount * 4;
+            }
+            else
+            {
+                dmgreduction = 8 * 4;
+            }
+        }
+    }
+
+    public void Showdown()
+    {
+        if (showdown)
+        {
+            if (enemyCount <= 1)
+            {
+                addDmg = 25;
+            }
+            else
+            {
+                addDmg = 0;
+            }
         }
     }
 
@@ -168,6 +272,32 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AddHP(float addhp)
+    {
+        addHP += addhp;
+    }
+
+    public void AddDmg(float adddmg)
+    {
+        addDmg += adddmg;
+    }
+
+    public void AddAS(float addas)
+    {
+        addAS += addas;
+    }
+
+    public void AddCHD(float addchd)
+    {
+        addCHD += addchd;
+    }
+
+    public void AddCHC(float addchc)
+    {
+        addCHC += addchc;
+    }
+    #endregion
+
     #region Calculation
     public void Calc()
     {
@@ -181,17 +311,17 @@ public class Player : MonoBehaviour
 
     public void DmgCalc()
     {
-        dmg = basedmg + STR;
+        dmg = (basedmg + STR) * (1 + addDmg / 100) * (1 + rageDmg / 100) * (1 + sdDmg / 100);
     }
 
     public void ASCalc()
     {
-        AS = baseAS / (1 + DEX / 100);
+        AS = baseAS / (1 + DEX / 100) / (1 + addAS / 100);
     }
 
     public void MaxHPCalc()
     {
-        maxhp = VIT * (10 + lvl / 2f);
+        maxhp = (VIT * (10 + lvl / 2f)) * (1 + addHP / 100);
     }
 
     public void HpRegenCalc()
@@ -201,12 +331,12 @@ public class Player : MonoBehaviour
 
     public void CHCCalc()
     {
-        CHC = baseCHC + DEX / 100;
+        CHC = baseCHC + DEX / 100 + addCHC;
     }
 
     public void CHDCalc()
     {
-        CHD = baseCHD + STR / 10;
+        CHD = baseCHD + STR / 10 + addCHD;
     }
     #endregion
 }

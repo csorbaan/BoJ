@@ -48,7 +48,7 @@ public class CharacterSheet : MonoBehaviour
         hptext.text = "Increase health by: " + hp;
         hpregentext.text = "Increase health regenation by: " + hpregen;
         dmgtext.text = "Increase damage by: " + dmg;
-        attackspeedtext.text = "Increase attack speed by: " + attackspeed;
+        attackspeedtext.text = "Increase attack speed by: " + attackspeed.ToString("0.00");
         atttext.text = "Attributes point left: " + att;
     }
 
