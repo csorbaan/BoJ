@@ -19,11 +19,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         UseItem();
+        
     }
 
     private void Start()
     {
         slotIconGO = transform.GetChild(0);
+        inv = PlayerManager.instance.ourPlayer.GetComponent<Inventory>();
     }
 
     public void UpdateSlot()
@@ -33,6 +35,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     public void UseItem()
     {
-        item.GetComponent<Item>().ItemEqp();
+        inv.EqpArmor(item, ID, type,itemName,icon);
     }
 }

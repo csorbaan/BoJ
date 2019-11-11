@@ -75,5 +75,8 @@ public class Inventory : MonoBehaviour
         armorSlot.GetComponent<EqpSlot>().type = itemType;
         armorSlot.GetComponent<EqpSlot>().ID = itemID;
         armorSlot.GetComponent<EqpSlot>().itemName = itemName;
+
+        itemObject.transform.parent = armorSlot.transform;
+        armorSlot.GetComponent<EqpSlot>().UpdateSlot();
     }
 }
