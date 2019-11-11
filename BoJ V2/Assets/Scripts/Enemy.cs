@@ -19,11 +19,13 @@ public class Enemy : MonoBehaviour
     public float lookRadius;
     public float attackRadius;
     public float tagRadius;
+    public float wanderRadius;
 
     float nextAttack;
     float attackRate = 1f;
-    bool agro, tagged;
-    Vector3 spawnLoc;
+    bool agro, tagged, wandering;
+    public bool mb;
+    Vector3 spawnLoc, wanderLoc;
 
     GameObject player;
     Transform targetPlayer;
@@ -31,15 +33,17 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        xp = 250;
-        dmg = 2;
         navMeshAgent = GetComponent<NavMeshAgent>();
-        health = 100;
-        mHealth = 100;
         player = PlayerManager.instance.ourPlayer;
+        xp = 50;
+        dmg = (4 + player.GetComponent<Player>().lvl) * (1.12f + player.GetComponent<Player>().lvl / 13);
+        mHealth = (56 + player.GetComponent<Player>().lvl * 5) * (1.12f + player.GetComponent<Player>().lvl / 13);
+        health = mHealth;
         targetPlayer = player.transform;
         spawnLoc = transform.position;
-        tagRadius = 5;
+        tagRadius = 4;
+        wanderRadius = 3;
+        wanderLoc = spawnLoc;
     }
 
     // Update is called once per frame
@@ -56,11 +60,31 @@ public class Enemy : MonoBehaviour
             player.GetComponent<Player>().enemyCount--;
             tagged = false;
         }
-        if (distance <= lookRadius || agro)
+        if (distance <= lookRadius && !mb)
         {
+            Agro();
+        }
+        if (agro)
+        {
+            wandering = false;
             MoveAndAttack();
         }
+        if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= 0.1)
+        {
+            mb = false;
+            wandering = true;
+            //navMeshAgent.speed = 2;
+        }
+        if (wandering)
+        {
+            Wander();
+        }
         if (Vector3.Distance(spawnLoc, transform.position) >= 10)
+        {
+            wandering = false;
+            MoveBack();
+        }
+        if (targetPlayer.GetComponent<Player>().hp <= 0)
         {
             MoveBack();
         }
@@ -68,12 +92,12 @@ public class Enemy : MonoBehaviour
 
     void OnDestroy()
     {
-        if (tagged)
-        {
-            player.GetComponent<Player>().enemyCount--;
-        }
         if (PlayerManager.instance.ourPlayer != null)
         {
+            if (tagged)
+            {
+                player.GetComponent<Player>().enemyCount--;
+            }
             PlayerManager.instance.ourPlayer.GetComponent<Player>().GetXP(xp);
         }
     }
@@ -106,14 +130,41 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void Wander()
+    {
+        if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= 0.1)
+        {
+            float xWanderPos = spawnLoc.x + Random.Range(-wanderRadius, wanderRadius);
+            float zWanderPos = spawnLoc.z + Random.Range(-wanderRadius, wanderRadius);
+
+            wanderLoc = new Vector3(xWanderPos, 0, zWanderPos);
+            transform.LookAt(wanderLoc);
+            navMeshAgent.destination = wanderLoc;
+        }
+    }
+
     void MoveBack()
     {
+        mb = true;
         agro = false;
         navMeshAgent.destination = spawnLoc;
+        navMeshAgent.isStopped = false;
+        health = mHealth;
     }
 
     public void Agro()
     {
         agro = true;
+        //navMeshAgent.speed = 3.5f;
+    }
+
+    public void EnemyBoss()
+    {
+        xp = 5400;
+        dmg = 100;
+        mHealth = 10000;
+        health = mHealth;
+        lookRadius = 6;
+        attackRadius = 3.5f;
     }
 }

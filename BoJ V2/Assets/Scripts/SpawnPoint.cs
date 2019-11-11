@@ -21,7 +21,7 @@ public class SpawnPoint : MonoBehaviour
         player = PlayerManager.instance.ourPlayer.transform;
         spawnRange = 3;
         detectionRange = 7;
-        maxSpawn = 10;
+        maxSpawn = 4;
     }
 
     // Update is called once per frame
@@ -40,7 +40,10 @@ public class SpawnPoint : MonoBehaviour
                 {
                     if (enemies[i] != null)
                     {
-                        enemies[i].GetComponent<Enemy>().Agro();
+                        if (!enemies[i].GetComponent<Enemy>().mb)
+                        {
+                            enemies[i].GetComponent<Enemy>().Agro();
+                        }
                     }
                 }
             }
@@ -61,7 +64,7 @@ public class SpawnPoint : MonoBehaviour
             Quaternion spawnRot = Quaternion.Euler(0, rot, 0);
 
             Vector3 spawnPoint = new Vector3(xSpawnPos, 0, zSpawnPos);
-            GameObject newEnemy = (GameObject)Instantiate(enemySpawn[Random.Range(0, enemySpawn.Length)],spawnPoint,spawnRot);
+            GameObject newEnemy = (GameObject)Instantiate(enemySpawn[Random.Range(0, enemySpawn.Length)], spawnPoint, spawnRot);
             newEnemy.GetComponent<Enemy>().Agro();
             enemies[i] = newEnemy;
         }
