@@ -6,7 +6,6 @@ public class Inventory : MonoBehaviour
 {
     private bool invEnabled;
     public GameObject inventory;
-    public GameObject armorSlot;
 
     private int allSlots;
     private GameObject[] slot;
@@ -66,17 +65,5 @@ public class Inventory : MonoBehaviour
             else continue;
             return;
         }
-    }
-
-    public void EqpArmor(GameObject itemObject, int itemID, string itemType, string itemName, Sprite itemIcon)
-    {
-        armorSlot.GetComponent<EqpSlot>().item = itemObject;
-        armorSlot.GetComponent<EqpSlot>().icon = itemIcon;
-        armorSlot.GetComponent<EqpSlot>().type = itemType;
-        armorSlot.GetComponent<EqpSlot>().ID = itemID;
-        armorSlot.GetComponent<EqpSlot>().itemName = itemName;
-
-        itemObject.transform.parent = armorSlot.transform;
-        armorSlot.GetComponent<EqpSlot>().UpdateSlot();
     }
 }

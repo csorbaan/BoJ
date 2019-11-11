@@ -118,7 +118,7 @@ public class Action : MonoBehaviour
                 }
                 enemy.Hit(dmg);
                 if (!enemy || enemy.health <= 0) EnemyHealth.SetActive(false);
-                else EHText.text = enemy.health.ToString();
+                else EHText.text = enemy.health.ToString("0");
                 nextAttack = Time.time + attackRate;
             }
             navMeshAgent.isStopped = true;
