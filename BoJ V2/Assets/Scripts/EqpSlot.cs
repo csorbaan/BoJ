@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IPointerClickHandler
+public class EqpSlot : MonoBehaviour
 {
     public GameObject item;
     public Transform slotIconGO;
@@ -14,13 +14,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public string itemName;
     public Sprite icon;
 
-    Inventory inv;
-
-    public void OnPointerClick(PointerEventData pointerEventData)
-    {
-        UseItem();
-    }
-
     private void Start()
     {
         slotIconGO = transform.GetChild(0);
@@ -29,10 +22,5 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public void UpdateSlot()
     {
         slotIconGO.GetComponent<Image>().sprite = icon;
-    }
-
-    public void UseItem()
-    {
-        item.GetComponent<Item>().ItemEqp();
     }
 }

@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\CharacterSheet.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\EnemyHPBar.cs" />
+    <Compile Include="Assets\Scripts\EqpSlot.cs" />
     <Compile Include="Assets\Scripts\GameMenu.cs" />
     <Compile Include="Assets\Scripts\HealthGlobe.cs" />
     <Compile Include="Assets\Scripts\InGameMenu.cs" />
