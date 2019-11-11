@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     private GameObject[] slot;
 
     public GameObject slotHolder;
+    public GameObject armorSlot;
 
     // Start is called before the first frame update
     void Start()
@@ -65,5 +66,17 @@ public class Inventory : MonoBehaviour
             else continue;
             return;
         }
+    }
+
+    public void ArmorEqp(GameObject itemObject, int itemID, string itemType, string itemName, Sprite itemIcon)
+    {
+        armorSlot.GetComponent<EqpSlot>().item = itemObject;
+        armorSlot.GetComponent<EqpSlot>().icon = itemIcon;
+        armorSlot.GetComponent<EqpSlot>().type = itemType;
+        armorSlot.GetComponent<EqpSlot>().ID = itemID;
+        armorSlot.GetComponent<EqpSlot>().itemName = itemName;
+
+        itemObject.transform.parent = armorSlot.transform;
+        armorSlot.GetComponent<EqpSlot>().UpdateSlot();
     }
 }
