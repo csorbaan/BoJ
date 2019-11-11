@@ -12,10 +12,10 @@ public class Player : MonoBehaviour
     private float baseCHC = 5;
     private float baseCHD = 50;
     float rageDmg, sdDmg;
-    public float addDmg;
+    float addDmg;
     float addCHC;
     float addCHD;
-    public float addAS;
+    float addAS;
     private float addHP;
     private float nextpoti;
     private float poticdleft;
@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     bool swon;
     float swontick;
     int swoncd;
-    Vector3 playerSpawn;
 
     public bool rage;
     public bool finalstand;
@@ -36,7 +35,7 @@ public class Player : MonoBehaviour
     public bool showdown;
     public Text p_HP;
     public Text poti_CD;
-    public GameObject potion, deathScreen;
+    public GameObject potion;
     public Text xp_bar;
     public Text lvl_bar;
     public int enemyCount;
@@ -65,15 +64,13 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerSpawn = new Vector3(25, 0, 203);
         poticdlefti = 0;
-        fscd = 120;
-        swcd = 60;
+        fscd = 60;
         lvl = 1;
         STR = 10;
         VIT = 10;
         DEX = 10;
-        xpcap = 200 + lvl * 250;
+        xpcap = 500 + lvl * 100;
         MaxHPCalc();
         hp = maxhp;
         poticdleft = poticd;
@@ -93,7 +90,6 @@ public class Player : MonoBehaviour
         Passives();
         HpRegen();
         LevelUp();
-        Death();
     }
 
     public void Hit(float dmg)
@@ -151,7 +147,7 @@ public class Player : MonoBehaviour
 
     public void GetXP(float exp)
     {
-        xp += (exp+lvl*6);
+        xp += exp;
     }
 
     public void LevelUp()
@@ -165,25 +161,8 @@ public class Player : MonoBehaviour
             }
             attribute += 10;
             xp = xp - xpcap;
-            xpcap = 200 + lvl * 250;
+            xpcap = 500 + lvl * 100;
         }
-    }
-
-    public void Death()
-    {
-        if (hp<=0)
-        {
-            deathScreen.SetActive(true);
-            PlayerManager.instance.ourPlayer.GetComponent<NavMeshAgent>().destination = playerSpawn;
-            PlayerManager.instance.ourPlayer.GetComponent<NavMeshAgent>().isStopped = true;
-            transform.position = playerSpawn;
-        }
-    }
-
-    public void RespawnBtn()
-    {
-        deathScreen.SetActive(false);
-        hp = maxhp;
     }
 
     #region Passive/StatInc
@@ -200,11 +179,11 @@ public class Player : MonoBehaviour
     {
         if (rage && hp <= (maxhp * 0.4))
         {
-            rageDmg = 20;
+            addDmg = 20;
         }
         else
         {
-            rageDmg = 0;
+            addDmg = 0;
         }
     }
 
@@ -212,14 +191,14 @@ public class Player : MonoBehaviour
     {
         if (finalstand && hp <= 0 && Time.time > nextfs)
         {
-            hp = (maxhp * 0.4f);
+
             nextfs = Time.time + fscd;
         }
     }
 
     public void Second_Wind()
     {
-        if (secondwind && hp <= (maxhp * 0.2f) && Time.time > nextsw)
+        if (secondwind && hp <= (maxhp * 0.2) && Time.time > nextsw)
         {
             swon = true;
             nextsw = Time.time + swcd;
@@ -257,11 +236,11 @@ public class Player : MonoBehaviour
         {
             if (enemyCount <= 1)
             {
-                sdDmg = 25;
+                addDmg = 25;
             }
             else
             {
-                sdDmg = 0;
+                addDmg = 0;
             }
         }
     }
