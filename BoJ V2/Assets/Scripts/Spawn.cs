@@ -5,11 +5,12 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
     public GameObject enemy;
+    public GameObject enemyBoss;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemyBoss.GetComponent<Enemy>().EnemyBoss();
     }
 
     // Update is called once per frame
