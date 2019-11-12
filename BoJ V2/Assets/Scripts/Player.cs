@@ -172,8 +172,8 @@ public class Player : MonoBehaviour
         if (hp<=0)
         {
             deathScreen.SetActive(true);
-            PlayerManager.instance.ourPlayer.GetComponent<NavMeshAgent>().isStopped = true;
-            
+            PlayerManager.instance.ourPlayer.GetComponent<NavMeshAgent>().enabled = false;
+            transform.position = playerSpawn.transform.position;
         }
     }
 
@@ -181,7 +181,7 @@ public class Player : MonoBehaviour
     {
         deathScreen.SetActive(false);
         hp = maxhp;
-        transform.position = playerSpawn.transform.position;
+        PlayerManager.instance.ourPlayer.GetComponent<NavMeshAgent>().enabled = true;
     }
 
     #region Passive/StatInc

@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     GameObject player;
     Transform targetPlayer;
     Type type;
+    public SpawnPoint sp;
 
     // Start is called before the first frame update
     void Start()
@@ -81,7 +82,7 @@ public class Enemy : MonoBehaviour
         {
             mb = false;
             wandering = true;
-            //navMeshAgent.speed = 2;
+            navMeshAgent.speed = 2;
         }
         if (wandering)
         {
@@ -180,7 +181,10 @@ public class Enemy : MonoBehaviour
     public void Agro()
     {
         agro = true;
-        //navMeshAgent.speed = 3.5f;
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.speed = 3.5f;
+        }
     }
 
     public void EnemyBoss()
@@ -210,7 +214,7 @@ public class Normal : EnemyType
 {
     public override void Stats(int lvl)
     {
-        xp = 50;
+        xp = 50 + 6 * lvl;
         dmg = (4 + lvl) * (1.12f + lvl / 13);
         mHealth = (56 + lvl * 5) * (1.12f + lvl / 13);
         lookRadius = 4;

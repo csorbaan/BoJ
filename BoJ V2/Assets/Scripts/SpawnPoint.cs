@@ -73,6 +73,7 @@ public class SpawnPoint : MonoBehaviour
             Vector3 spawnPoint = new Vector3(xSpawnPos, 0, zSpawnPos);
             GameObject newEnemy = (GameObject)Instantiate(enemySpawn[Random.Range(0, enemySpawn.Length)], spawnPoint, spawnRot);
             newEnemy.GetComponent<Enemy>().Agro();
+            newEnemy.GetComponent<Enemy>().sp = this;
             enemies[i] = newEnemy;
         }
     }

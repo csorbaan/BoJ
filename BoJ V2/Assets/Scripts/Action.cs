@@ -81,7 +81,7 @@ public class Action : MonoBehaviour
             ehpb.barUpload(enemy.mHealth, enemy.health);
         }
 
-        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        if (navMeshAgent.enabled && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
             walking = false;
         }
