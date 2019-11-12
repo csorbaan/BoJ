@@ -98,10 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e302fa203eb82f648abd73e6429b1106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  dmg: 10
-  lookRadius: 4
-  attackRadius: 1.5
+  health: 5000
+  dmg: 100
+  xp: 5400
+  mHealth: 5000
+  lookRadius: 6
+  attackRadius: 3.5
+  tagRadius: 0
+  wanderRadius: 0
+  mb: 0
 --- !u!1 &2550651128232203528
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     bool swon;
     float swontick;
     int swoncd;
-    Vector3 playerSpawn;
 
     public bool rage;
     public bool finalstand;
@@ -36,7 +35,7 @@ public class Player : MonoBehaviour
     public bool showdown;
     public Text p_HP;
     public Text poti_CD;
-    public GameObject potion, deathScreen;
+    public GameObject potion, deathScreen, playerSpawn;
     public Text xp_bar;
     public Text lvl_bar;
     public int enemyCount;
@@ -65,7 +64,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerSpawn = new Vector3(25, 0, 203);
         poticdlefti = 0;
         fscd = 120;
         swcd = 60;
@@ -174,9 +172,8 @@ public class Player : MonoBehaviour
         if (hp<=0)
         {
             deathScreen.SetActive(true);
-            PlayerManager.instance.ourPlayer.GetComponent<NavMeshAgent>().destination = playerSpawn;
             PlayerManager.instance.ourPlayer.GetComponent<NavMeshAgent>().isStopped = true;
-            transform.position = playerSpawn;
+            
         }
     }
 
@@ -184,6 +181,7 @@ public class Player : MonoBehaviour
     {
         deathScreen.SetActive(false);
         hp = maxhp;
+        transform.position = playerSpawn.transform.position;
     }
 
     #region Passive/StatInc

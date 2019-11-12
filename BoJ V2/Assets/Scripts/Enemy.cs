@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour
 
     NavMeshAgent navMeshAgent;
     Animator anim;
-    EnemyHPBar ehp;
 
     public float lookRadius;
     public float attackRadius;
@@ -23,21 +22,30 @@ public class Enemy : MonoBehaviour
 
     float nextAttack;
     float attackRate = 1f;
-    bool agro, tagged, wandering;
+    bool agro, tagged, wandering, boss;
     public bool mb;
     Vector3 spawnLoc, wanderLoc;
 
+    public GameObject gameManager;
     GameObject player;
     Transform targetPlayer;
+    Type type;
 
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         player = PlayerManager.instance.ourPlayer;
-        xp = 50;
-        dmg = (4 + player.GetComponent<Player>().lvl) * (1.12f + player.GetComponent<Player>().lvl / 13);
-        mHealth = (56 + player.GetComponent<Player>().lvl * 5) * (1.12f + player.GetComponent<Player>().lvl / 13);
+        type = new Type();
+        if (boss)
+        {
+            LoadStats(new Boss());
+        }
+        else
+            LoadStats(new Normal());
+        //xp = 50;
+        //dmg = (4 + player.GetComponent<Player>().lvl) * (1.12f + player.GetComponent<Player>().lvl / 13);
+        //mHealth = (56 + player.GetComponent<Player>().lvl * 5) * (1.12f + player.GetComponent<Player>().lvl / 13);
         health = mHealth;
         targetPlayer = player.transform;
         spawnLoc = transform.position;
@@ -100,6 +108,23 @@ public class Enemy : MonoBehaviour
             }
             PlayerManager.instance.ourPlayer.GetComponent<Player>().GetXP(xp);
         }
+        if (boss)
+        {
+            Spawn.instance.nextBoss = true;
+        }
+    }
+
+    public void LoadStats(EnemyType eType)
+    {
+        type.TypeChange(eType);
+        type.Enemy(player.GetComponent<Player>().lvl);
+        mHealth = type.mHealth;
+        dmg = type.dmg;
+        xp = type.xp;
+        lookRadius = type.lookRadius;
+        attackRadius = type.attackRadius;
+        transform.name = type.name;
+        transform.localScale = type.scale;
     }
 
     public void Hit(float dmg)
@@ -160,11 +185,77 @@ public class Enemy : MonoBehaviour
 
     public void EnemyBoss()
     {
+        boss = true;
+        //xp = 5400;
+        //dmg = 100;
+        //mHealth = 5000;
+        //health = mHealth;
+        //lookRadius = 6;
+        //attackRadius = 3.5f;
+        //transform.name = "EnemyBoss";
+        //transform.localScale = new Vector3(3, 3, 3);
+    }
+}
+
+public abstract class EnemyType
+{
+    public float mHealth, dmg, xp, lookRadius, attackRadius;
+    public string name;
+    public Vector3 scale;
+
+    public abstract void Stats(int lvl);
+}
+
+public class Normal : EnemyType
+{
+    public override void Stats(int lvl)
+    {
+        xp = 50;
+        dmg = (4 + lvl) * (1.12f + lvl / 13);
+        mHealth = (56 + lvl * 5) * (1.12f + lvl / 13);
+        lookRadius = 4;
+        attackRadius = 1.5f;
+        name = "Enemy";
+        scale = new Vector3(1, 1, 1);
+    }
+}
+
+public class Boss : EnemyType
+{
+    public override void Stats(int lvl)
+    {
         xp = 5400;
         dmg = 100;
-        mHealth = 10000;
-        health = mHealth;
+        mHealth = 5000;
         lookRadius = 6;
         attackRadius = 3.5f;
+        name = "EnemyBoss";
+        scale = new Vector3(3, 3, 3);
+    }
+}
+
+public class Type
+{
+    private EnemyType _EnemyType;
+
+    public float mHealth, dmg, xp, lookRadius, attackRadius;
+    public string name;
+    public Vector3 scale;
+
+    public void TypeChange(EnemyType t)
+    {
+        _EnemyType = t;
+    }
+
+    public void Enemy(int lvl)
+    {
+        _EnemyType.Stats(lvl);
+        mHealth = _EnemyType.mHealth;
+        dmg = _EnemyType.dmg;
+        xp = _EnemyType.xp;
+        lookRadius = _EnemyType.lookRadius;
+        attackRadius = _EnemyType.attackRadius;
+        name = _EnemyType.name;
+        scale = _EnemyType.scale;
     }
 }

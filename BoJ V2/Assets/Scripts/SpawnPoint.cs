@@ -7,6 +7,7 @@ public class SpawnPoint : MonoBehaviour
     private bool hasSpawned;
     int spawnAmount;
     private Transform player;
+    float respawnTime, nextRespawnTime;
 
     public GameObject[] enemySpawn;
     public GameObject[] enemies;
@@ -22,6 +23,7 @@ public class SpawnPoint : MonoBehaviour
         spawnRange = 3;
         detectionRange = 7;
         maxSpawn = 4;
+        respawnTime = 60;
     }
 
     // Update is called once per frame
@@ -33,6 +35,7 @@ public class SpawnPoint : MonoBehaviour
             if (!hasSpawned)
             {
                 SpawnEnemy();
+                nextRespawnTime = Time.time + respawnTime;
             }
             else
             {
@@ -47,6 +50,10 @@ public class SpawnPoint : MonoBehaviour
                     }
                 }
             }
+        }
+        if (Time.time > nextRespawnTime && hasSpawned)
+        {
+            hasSpawned = false;
         }
     }
 
