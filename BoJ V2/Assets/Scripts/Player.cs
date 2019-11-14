@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
 
     public void GetXP(float exp)
     {
-        xp += (exp+lvl*6);
+        xp += exp;
     }
 
     public void LevelUp()

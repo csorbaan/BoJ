@@ -201,6 +201,7 @@ public class Enemy : MonoBehaviour
     }
 }
 
+#region EnemyType
 public abstract class EnemyType
 {
     public float mHealth, dmg, xp, lookRadius, attackRadius;
@@ -263,3 +264,4 @@ public class Type
         scale = _EnemyType.scale;
     }
 }
+#endregion
