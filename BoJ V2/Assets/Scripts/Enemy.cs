@@ -15,10 +15,7 @@ public class Enemy : MonoBehaviour
     NavMeshAgent navMeshAgent;
     Animator anim;
 
-    public float lookRadius;
-    public float attackRadius;
-    public float tagRadius;
-    public float wanderRadius;
+    public float lookRadius, attackRadius, tagRadius, wanderRadius;
 
     float nextAttack;
     float attackRate = 1f;

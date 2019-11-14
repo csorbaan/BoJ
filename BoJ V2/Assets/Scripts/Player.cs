@@ -28,33 +28,21 @@ public class Player : MonoBehaviour
     float swontick;
     int swoncd;
 
-    public bool rage;
-    public bool finalstand;
-    public bool secondwind;
-    public bool formidable;
-    public bool showdown;
-    public Text p_HP;
-    public Text poti_CD;
+    public bool rage, finalstand, secondwind, formidable, showdown;
+    public Text poti_CD, lvl_bar, p_HP, xp_bar;
     public GameObject potion, deathScreen, playerSpawn;
-    public Text xp_bar;
-    public Text lvl_bar;
     public int enemyCount;
 
     [Header("Stats")]
-    public float maxhp;
-    public float hp;
+    public float maxhp, hp;
     public float dmg;
     public float AS;
-    public float STR;
-    public float VIT;
-    public float DEX;
+    public float STR, VIT, DEX;
     public float poticd = 10;
     public int lvl;
     public float hpregen;
-    public float CHD;
-    public float CHC;
-    public float xp;
-    public float xpcap;
+    public float CHD, CHC;
+    public float xp, xpcap;
     public int attribute;
     public int passivept;
     public float dmgreduction;

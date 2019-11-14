@@ -9,8 +9,7 @@ public class Action : MonoBehaviour
 {
     public GameObject EnemyHealth;
     Text EHText;
-    public float CHD;
-    public float CHC;
+    public float CHD, CHC;
 
     [Header("Stats")]
     public float attackDistance;
