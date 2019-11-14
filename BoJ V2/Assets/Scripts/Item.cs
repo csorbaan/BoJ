@@ -9,4 +9,5 @@ public class Item : MonoBehaviour
     public string itemName;
     public Sprite icon;
     public bool pickedUp;
+    public int str, dex, vit, dmg;
 }

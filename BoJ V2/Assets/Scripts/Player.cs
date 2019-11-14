@@ -315,6 +315,21 @@ public class Player : MonoBehaviour
     {
         addCHC += addchc;
     }
+
+    public void AddStr(int addstr)
+    {
+        STR += addstr;
+    }
+
+    public void AddDex(int adddex)
+    {
+        DEX += adddex;
+    }
+
+    public void AddVit(int addvit)
+    {
+        VIT += addvit;
+    }
     #endregion
 
     #region Calculation

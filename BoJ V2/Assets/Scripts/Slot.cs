@@ -13,6 +13,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     public string itemName;
     public Sprite icon;
     Inventory inv;
+    public int str, dex, vit, dmg;
 
     void Start()
     {
@@ -31,6 +32,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
     public void UseItem()
     {
-        inv.ArmorEqp(item, ID, type, itemName, icon);
+        if (type == "Armor") inv.ArmorEqp(item, ID, type, itemName, icon, str, dex, vit, dmg);
+        else inv.WeaponEqp(item, ID, type, itemName, icon, str, dex, vit, dmg);
+        empty = true;
+        icon = null;
+        item.SetActive(false);
+        UpdateSlot();
     }
 }
